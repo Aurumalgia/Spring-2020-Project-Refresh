@@ -30,23 +30,27 @@ public class View {
         System.out.println("Press enter to continue....");
         scanner.nextLine();
     }
-    public void showPlayerHand(Hand hand){
+    public void showPlayerHand(Hand hand) throws InterruptedException {
+        TimeUnit.SECONDS.sleep(1);
         System.out.println("\nYou have "+hand.getHand().size()+" cards:");
         hand.printHand();
+        TimeUnit.SECONDS.sleep(1);
         System.out.println("\nYour hand's total is "+hand.getHandTotal()+". ");
     }
 
-    public void showDealerCard(Hand hand){
-        System.out.println("The Dealer's first card is: \n"+hand.getHand().get(0).toString());
+    public void showDealerCard(Hand hand) {
+        System.out.println("\nThe Dealer's first card is: \n"+hand.getHand().get(0).toString());
     }
 
-    public void showDealerHand(Hand hand){
+    public void showDealerHand(Hand hand) throws InterruptedException {
         System.out.println("\nThe Dealer has "+hand.getHand().size()+" cards:");
         hand.printHand();
+        TimeUnit.SECONDS.sleep(1);
         System.out.println("\nThe Dealer's hand's total is "+hand.getHandTotal()+". ");
-        if (hand.getHandTotal() > 21)
+        if (hand.getHandTotal() > 21) {
+            TimeUnit.SECONDS.sleep(1);
             System.out.println("The Dealer has been busted! ");
-
+        }
     }
 
     public void showTotal(Hand playerHand, Hand dealerHand){
@@ -56,17 +60,21 @@ public class View {
 
     }
 
-    public void Action(boolean drewCard, Hand hand, String whosTurn) {
+    public void Action(boolean drewCard, Hand hand, String whosTurn) throws InterruptedException {
         if (drewCard) {
+            TimeUnit.SECONDS.sleep(1);
             System.out.println("\n"+whosTurn+" drew a " + hand.getHand().get(hand.getHand().size() - 1));
         }
-        else
-            System.out.println("\n"+whosTurn +" chose to stand. ");
+        else {
+            System.out.println("\n" + whosTurn + " chose to stand. ");
+            TimeUnit.SECONDS.sleep(1);
+        }
     }
 
-    public void endOfPlayerTurn(Hand hand){
+    public void endOfPlayerTurn(Hand hand) throws InterruptedException {
         if (hand.getHandTotal()>21)
             System.out.println("Your hand has been busted... ");
+        TimeUnit.SECONDS.sleep(1);
         System.out.println("\n\nDealer's Turn.");
     }
 
@@ -84,13 +92,16 @@ public class View {
             switch (hitMe) {
                 case "hit me":
                 case "hit":
+                case "h":
                     drawACard = true; validInput = true;
-                break;
+                    break;
 
-                case "stand": drawACard = false; validInput = true;
-                break;
-
-                default: System.out.println("Invalid input.");
+                case "st":
+                case "stand":
+                    drawACard = false; validInput = true;
+                    break;
+                default:
+                    System.out.println("Invalid input.");
             }
         }
         return drawACard;
@@ -124,10 +135,11 @@ public class View {
         while(!validInput){
             switch (newGame) {
                 case "yes":
+                case "y":
                     replay = true;
                     validInput = true;
                     break;
-
+                case "n":
                 case "no":
                     replay = false;
                     validInput = true;
@@ -193,7 +205,9 @@ public class View {
     public int correctBet(String input){
         switch (input) {
             case "yes":
+            case "y":
                 return 0;
+            case "n":
             case "no":
                 return 1;
             default:

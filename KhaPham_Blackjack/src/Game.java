@@ -57,7 +57,7 @@ public class Game {
         busted = false;
     }
 
-    public void dealerMove(){
+    public void dealerMove() throws InterruptedException {
         busted = false;
         hold = false;
         v.showDealerHand(dealerHand);
@@ -67,6 +67,7 @@ public class Game {
             }
             dealerHand.getHand().add(d.dealCard());
             v.Action(true, dealerHand, "The Dealer");
+            busted = checkBusted(dealerHand.checkTotal());
         }
         v.Action(false, dealerHand, "The Dealer");
 
