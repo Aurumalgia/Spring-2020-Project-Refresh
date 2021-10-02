@@ -7,8 +7,8 @@ public enum CardValue {
     TEN(10, "Ten"), JACK(10, "Jack"), QUEEN(10, "Queen"),
     KING(10, "King");
 
-    private String cardName;
-    private int cardValue;
+    private final String cardName;
+    private final int cardValue;
     CardValue(int cardValue, String cardName){
         this.cardName = cardName;
         this.cardValue = cardValue;

@@ -1,7 +1,6 @@
 package deck;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Hand {
     private ArrayList<Card> hand = new ArrayList<>();
@@ -19,8 +18,8 @@ public class Hand {
     }
     public int checkTotal(){
         handTotal = 0;
-        for (int x = 0; x < hand.size(); x++){
-            handTotal += hand.get(x).getRankValue();
+        for (Card card : hand) {
+            handTotal += card.getRankValue();
         }
         int aceOccurrences =0;
 

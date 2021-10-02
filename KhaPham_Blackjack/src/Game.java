@@ -1,13 +1,11 @@
 import deck.*;
 
-import java.util.concurrent.TimeUnit;
-
 public class Game {
     Hand playerHand = new Hand(false);
     Hand dealerHand = new Hand(true);
     View v;
     Deck d;
-    int playerGold, playerTotal, dealerTotal, round = 1, playerWins, ties, bet;
+    int playerGold, playerTotal, dealerTotal, round = 1, playerWins, bet;
     boolean busted = false, hold = false, continuePlaying = true;
     public Game(View v, Deck d, int startingGold){
         this.v = v;
@@ -61,7 +59,7 @@ public class Game {
         busted = false;
         hold = false;
         v.showDealerHand(dealerHand);
-        while(busted == false && hold == false && dealerHand.checkTotal() < 17){
+        while(!busted && !hold && dealerHand.checkTotal() < 17){
             if (d.getDeck().size() == 0){
                 d.reShuffleDeck();
             }
@@ -79,7 +77,7 @@ public class Game {
     public double calculateWinRate(){
         double winrate;
         if (round>1) {
-            winrate = (playerWins * 100) / (round);
+            winrate = (playerWins * 100.0) / (round);
         }
         else
             winrate = 0;
@@ -87,7 +85,7 @@ public class Game {
     }
 
     public void playerMove() throws InterruptedException {
-        while (busted == false && hold == false) {
+        while (!busted && !hold) {
             if(v.hitMeCheck()){
                 if (d.getDeck().size() == 0){
                     d.reShuffleDeck();
@@ -122,12 +120,7 @@ public class Game {
             playerVictoryOptions = 2;
             playerGold -= bet;
         }
-        else if (playerTotal == dealerTotal){
-            playerVictoryOptions = 1;
-        }
-        else if(playerTotal > 21 && dealerTotal>21){
-            playerVictoryOptions = 1;
-        }
+
 
         v.victoryScreen(playerVictoryOptions);
 
@@ -160,10 +153,7 @@ public class Game {
     }
 
     public boolean checkBusted(int total){
-        if (total > 21){
-            return true;
-        }
-        return false;
+        return total > 21;
     }
 
 }
